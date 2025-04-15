@@ -1,0 +1,28 @@
+<?php
+function isPrime($angka) {
+    if ($angka <= 1) return false;
+    if ($angka == 2) return true;
+
+    for ($i = 2; $i <= sqrt($angka); $i++) {
+        if ($angka % $i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+$awal = 10;
+$akhir = 30;
+
+$prima = [];
+
+for ($i = $awal; $i <= $akhir; $i++) {
+    if (isPrime($i)) {
+        $prima[] = $i;
+    }
+}
+
+echo "Bilangan prima dari $awal sampai $akhir:\n";
+echo implode(", ", $prima) . "\n";
+echo "Total: " . count($prima) . "\n";
+?>

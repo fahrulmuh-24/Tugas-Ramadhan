@@ -1,0 +1,65 @@
+<?php
+class Logger {
+    public static $logs = [];
+
+    public static function catat($userLevel, $username, $aksi) {
+        $waktu = date("Y-m-d H:i:s");
+        array_unshift(self::$logs, "[$waktu] [$userLevel] [$username] $aksi");
+    }
+
+    public static function tampilkanLog() {
+        foreach (self::$logs as $log) {
+            echo $log . "\n.";
+        }
+    }
+}
+
+class User {
+    protected $username;
+    protected $level;
+
+    public function __construct($username) {
+        $this->username = $username;
+        $this->level = "User";
+    }
+
+    public function unggahPesan($pesan) {
+        Logger::catat($this->level, $this->username, "mengunggah pesan: \"$pesan\"");
+    }
+}
+
+class Moderator extends User {
+    public function __construct($username) {
+        parent::__construct($username);
+        $this->level = "Moderator";
+    }
+
+    public function hapusPesan($pesan) {
+        Logger::catat($this->level, $this->username, "menghapus pesan: \"$pesan\"");
+    }
+}
+
+class Admin extends Moderator {
+    public function __construct($username) {
+        parent::__construct($username);
+        $this->level = "Admin";
+    }
+
+    public function sematPesan($pesan) {
+        Logger::catat($this->level, $this->username, "menyematkan pesan: \"$pesan\"");
+    }
+}
+
+$user = new User("Budi");
+$mod = new Moderator("Cici");
+$admin = new Admin("Ali");
+
+$user->unggahPesan("Selamat datang di forum.");
+$mod->unggahPesan("Peraturan sudah diperbarui.");
+$mod->hapusPesan("Pesan spam dari user.");
+$admin->sematPesan("Pengumuman penting!");
+$admin->hapusPesan("Pesan lama yang tidak relevan");
+
+echo "<h3>📜 Log Aktivitas:</h3>";
+Logger::tampilkanLog();
+?>

@@ -1,0 +1,26 @@
+<?php
+$orang = [ 
+    [ 'nama' => 'Luqman', 'umur' => '25 tahun', 'jenis_kelamin' => 'L' ], 
+    [ 'nama' => 'Farhan', 'umur' => '30 tahun', 'jenis_kelamin' => 'P' ], 
+    [ 'nama' => 'Taufiq', 'umur' => '20 tahun', 'jenis_kelamin' => 'L' ] 
+];
+
+function castDataOrang($data) {
+    foreach ($data as &$item) {
+        $item['umur'] = (int) filter_var($item['umur'], FILTER_SANITIZE_NUMBER_INT);
+        
+        if ($item['jenis_kelamin'] === 'L') {
+            $item['jenis_kelamin'] = 'Laki-laki';
+        } elseif ($item['jenis_kelamin'] === 'P') {
+            $item['jenis_kelamin'] = 'Perempuan';
+        }
+    }
+    return $data;
+}
+
+$dataBaru = castDataOrang($orang);
+
+foreach ($dataBaru as $item) {
+    echo "Nama: {$item['nama']}, Umur: {$item['umur']}, Jenis Kelamin: {$item['jenis_kelamin']}\n";
+}
+?>

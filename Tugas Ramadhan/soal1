@@ -1,0 +1,34 @@
+<?php
+class Mahasiswa {
+    public $nama;
+    public $nim;
+    public $nilai;
+    public $jurusan;
+
+    public function __construct($nama, $nim, $nilai, $jurusan) {
+        $this->nama = $nama;
+        $this->nim = $nim;
+        $this->nilai = $nilai;
+        $this->jurusan = $jurusan;
+    }
+}
+
+$mahasiswa = [
+    new Mahasiswa("Hubeb", "101", 85, "Teknik"),
+    new Mahasiswa("Farhan", "102", 90, "Hukum"),
+    new Mahasiswa("Taufiq", "103", 90, "Ekonomi"),
+    new Mahasiswa("Nabil", "104", 85, "Kedokteran"),
+    new Mahasiswa("Luqman", "105", 90, "Filsafat")
+];
+
+usort($mahasiswa, function($a, $b) {
+    if ($a->nilai === $b->nilai) {
+        return strcmp($a->nama, $b->nama);
+    }
+    return $b->nilai - $a->nilai;
+});
+
+foreach ($mahasiswa as $mhs) {
+    echo "Nama: {$mhs->nama},  NIM: {$mhs->nim},  Nilai: {$mhs->nilai},  Jurusan: {$mhs->jurusan} \n";
+}
+?>

@@ -1,0 +1,58 @@
+<?php
+$nilaiSiswa = [
+    "Farhan" => 100,
+    "Taufiq" => 92,
+    "Luqman" => 85,
+    "Nabil" => 78,
+    "Hubeb" => 69,
+    "Reno" => 50,
+    "Gilang" => 40,
+    "Hana" => 101, 
+    "Ivan" => -10, 
+    "Joko" => 73
+];
+
+$kkm = 75;
+$remidi = 0;
+$lulus = 0;
+$dibawahKKM = [];
+
+foreach ($nilaiSiswa as $nama => $nilai) {
+    echo "Nama: $nama, Nilai: $nilai => ";
+
+    if ($nilai > 100 || $nilai < 0) {
+        echo "❌ Nilai tidak valid!\n";
+        continue;
+    }
+
+    if ($nilai === 100) {
+        echo "Sempurna\n";
+    } elseif ($nilai >= 90) {
+        echo "Sangat Bagus\n";
+    } elseif ($nilai >= 80) {
+        echo "Bagus\n";
+    } elseif ($nilai >= 70) {
+        echo "Lumayan\n";
+    } elseif ($nilai >= 50) {
+        echo "Belajar Lagi (Remidi)\n";
+        $remidi++;
+    } else {
+        echo "Ulangi Lagi pelajarannya 10x (Remidi)\n";
+        $remidi++;
+    }
+
+    if ($nilai >= $kkm) {
+        $lulus++;
+    }
+
+    if ($nilai < $kkm && $nilai >= 0 && $nilai <= 100) {
+        $dibawahKKM[] = $nama;
+    }
+}
+
+echo "\n📊 Statistik:\n";
+echo "- Jumlah siswa: " . count($nilaiSiswa) . "\n";
+echo "- Remidi: $remidi orang\n";
+echo "- Lulus: $lulus orang\n";
+echo "- Di bawah KKM: " . implode(", ", $dibawahKKM) . "\n";
+?>

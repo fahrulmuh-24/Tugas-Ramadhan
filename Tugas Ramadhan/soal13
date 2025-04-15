@@ -1,0 +1,35 @@
+<?php
+interface BangunRuang {
+    public function hitungVolume();
+}
+
+class Kubus implements BangunRuang {
+    private $sisi;
+
+    public function __construct($sisi) {
+        $this->sisi = $sisi;
+    }
+
+    public function hitungVolume() {
+        return pow($this->sisi, 3);
+    }
+}
+
+class Bola implements BangunRuang {
+    private $jari;
+
+    public function __construct($jari) {
+        $this->jari = $jari;
+    }
+
+    public function hitungVolume() {
+        return (4/3) * pi() * pow($this->jari, 3);
+    }
+}
+
+$kubus = new Kubus(4);
+$bola = new Bola(7);
+
+echo "Volume Kubus (sisi 4)   : " . $kubus->hitungVolume() . "\n";
+echo "Volume Bola (jari 7)    : " . $bola->hitungVolume() ;
+?>

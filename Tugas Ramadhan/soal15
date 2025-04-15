@@ -1,0 +1,23 @@
+<?php
+function fibonacci($jumlah) {
+    $hasil = [];
+
+    for ($i = 0; $i < $jumlah; $i++) {
+        if ($i == 0) {
+            $hasil[] = 0;
+        } elseif ($i == 1) {
+            $hasil[] = 1;
+        } else {
+            $hasil[] = $hasil[$i - 1] + $hasil[$i - 2];
+        }
+    }
+
+    return $hasil;
+}
+
+$jumlah = 10;
+$deret = fibonacci($jumlah);
+
+echo "Deret Fibonacci ($jumlah angka): \n";
+echo implode(", ", $deret) . "\n";
+?>

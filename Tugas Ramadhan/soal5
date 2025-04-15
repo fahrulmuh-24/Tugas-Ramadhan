@@ -1,0 +1,46 @@
+<?php
+$quiz = [
+    [
+        "pertanyaan" => "Di mana Ibukota Indonesia?",
+        "pilihan" => [
+            "a" => "IKN",
+            "b" => "Jakarta",
+            "c" => "Aceh",
+            "d" => "Papua"
+        ],
+        "jawaban" => "b"
+    ],
+    [
+        "pertanyaan" => "Siapa penemu listrik?",
+        "pilihan" => [
+            "a" => "Einstein",
+            "b" => "Newton",
+            "c" => "Thomas Edison",
+            "d" => "Galileo"
+        ],
+        "jawaban" => "c"
+    ]
+];
+
+$skor = 0;
+
+foreach ($quiz as $index => $soal) {
+    echo "\n" . ($index + 1) . ". " . $soal["pertanyaan"] . "\n";
+
+    foreach ($soal["pilihan"] as $key => $value) {
+        echo "  $key. $value\n";
+    }
+
+    echo "Jawaban: ";
+    $jawab = trim(fgets(STDIN));
+
+    if (strtolower($jawab) === $soal["jawaban"]) {
+        echo "✅ Benar!\n";
+        $skor++;
+    } else {
+        echo "❌ Salah! Jawaban yang benar: " . $soal["jawaban"] . ". " . $soal["pilihan"][$soal["jawaban"]] . "\n";
+    }
+}
+
+echo "\n🎉 Skor akhir kamu: $skor dari " . count($quiz) . " soal.\n";
+?>

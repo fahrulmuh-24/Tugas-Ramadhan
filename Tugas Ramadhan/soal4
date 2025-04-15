@@ -1,0 +1,34 @@
+<?php
+$aturan = [
+    'Api' => ['menang' => ['Es', 'Angin'], 'kalah' => ['Air', 'Tanah']],
+    'Air' => ['menang' => ['Api', 'Tanah'], 'kalah' => ['Angin', 'Es']],
+    'Tanah' => ['menang' => ['Api', 'Angin'], 'kalah' => ['Air', 'Es']],
+    'Angin' => ['menang' => ['Air', 'Es'], 'kalah' => ['Api', 'Tanah']],
+    'Es' => ['menang' => ['Air', 'Tanah'], 'kalah' => ['Api', 'Angin']],
+];
+
+$elemen = array_keys($aturan);
+
+echo "Pilih elemen (Api, Air, Tanah, Angin, Es): ";
+$input = trim(fgets(STDIN));
+
+$player = ucfirst(strtolower($input));
+
+if (in_array($player, $elemen)) {
+    echo "Pilihan tidak valid!\n";
+    exit;
+}
+
+$komputer = $elemen[array_rand($elemen)];
+
+echo "Kamu memilih: $player\n";
+echo "Komputer memilih: $komputer\n";
+
+if ($player == $komputer) {
+    echo "Hasil: Seri!\n";
+} elseif (in_array($komputer, $aturan[$player]['menang'])) {
+    echo "Hasil: Kamu MENANG!\n";
+} else {
+    echo "Hasil: Kamu KALAH!\n";
+}
+?>

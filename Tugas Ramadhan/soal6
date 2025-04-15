@@ -1,0 +1,19 @@
+<?php
+function capitalSentenceOnly($kalimat) {
+    $kataKecil = ['dan', 'yang', 'di', 'ke', 'dari', 'atau', 'pada', 'untuk', 'dengan'];
+
+    $kata = explode(" ", strtolower($kalimat));
+
+    foreach ($kata as $i => $val) {
+        if ($i == 0 || !in_array($val, $kataKecil)) {
+            $kata[$i] = ucfirst($val);
+        }
+    }
+
+    return implode(" ", $kata);
+}
+
+echo capitalSentenceOnly("DAUN YANG JATUH TAK AKAN MENYALAHKAN ANGIN") . "\n";
+echo capitalSentenceOnly("laut bercerita") . "\n";
+echo capitalSentenceOnly("NeGeRi AntAH BerAntAH") . "\n";
+?>

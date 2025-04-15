@@ -1,0 +1,35 @@
+<?php
+abstract class BangunDatar {
+    abstract public function hitungLuas();
+}
+
+class Persegi extends BangunDatar {
+    private $sisi;
+
+    public function __construct($sisi) {
+        $this->sisi = $sisi;
+    }
+
+    public function hitungLuas() {
+        return $this->sisi * $this->sisi;
+    }
+}
+
+class Lingkaran extends BangunDatar {
+    private $jari;
+
+    public function __construct($jari) {
+        $this->jari = $jari;
+    }
+
+    public function hitungLuas() {
+        return pi() * pow($this->jari, 2); // π * r^2
+    }
+}
+
+$persegi = new Persegi(5);
+$lingkaran = new Lingkaran(7);
+
+echo "Luas Persegi (sisi 5)     : " . $persegi->hitungLuas() . "\n";
+echo "Luas Lingkaran (jari 7)   : " . $lingkaran->hitungLuas() ;
+?>
