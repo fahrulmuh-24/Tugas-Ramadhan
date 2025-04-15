@@ -2,25 +2,31 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+// bikin variabel buat simpan pesan
+$pesan = "";
+
 $koneksi = new mysqli("localhost", "root", "2006", "perpustakaan");
 
+// cek koneksi
 if ($koneksi->connect_error) {
     die("Koneksi gagal: " . $koneksi->connect_error);
 }
 
+// kalau tombol submit ditekan
 if (isset($_POST['submit'])) {
     $judul = $_POST['judul'];
     $penulis = $_POST['penulis'];
     $tahun = $_POST['tahun_terbit'];
 
     $sql = "INSERT INTO buku (judul, penulis, tahun_terbit) VALUES ('$judul', '$penulis', $tahun)";
-    if ($koneksi->query($sql)) {    
-        echo "<p style='color:green;'>✅ Buku berhasil ditambahkan!</p>";
+    if ($koneksi->query($sql)) {
+        $pesan = "✅ Buku berhasil ditambahkan!";
     } else {
-        echo "<p style='color:red;'>❌ Gagal menambahkan buku: " . $koneksi->error . "</p>";
+        $pesan = "❌ Gagal menambahkan buku: " . $koneksi->error;
     }
 }
 
+// cari buku
 $keyword = isset($_GET['search']) ? $_GET['search'] : '';
 $sql = "SELECT * FROM buku WHERE judul LIKE '%$keyword%' OR penulis LIKE '%$keyword%'";
 $result = $koneksi->query($sql);
@@ -29,25 +35,27 @@ $result = $koneksi->query($sql);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Perpustakaan Sederhana</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        input, button { margin: 5px 0; padding: 5px; }
-        hr { margin: 20px 0; }
-    </style>
+    <title>Perpustakaan Mini</title>
 </head>
 <body>
-    <h2>📚 Tambah Buku</h2>
+    <h2>Tambah Buku</h2>
+
+    <!-- tampilkan pesan -->
+    <?php if (!empty($pesan)) echo "<p>$pesan</p>"; ?>
+
     <form method="POST">
-        Judul: <br><input type="text" name="judul" required><br>
-        Penulis: <br><input type="text" name="penulis" required><br>
-        Tahun Terbit: <br><input type="number" name="tahun_terbit" required><br>
-        <button type="submit" name="submit">Tambah Buku</button>
+        Judul: <br>
+        <input type="text" name="judul" required><br>
+        Penulis: <br>
+        <input type="text" name="penulis" required><br>
+        Tahun Terbit: <br>
+        <input type="number" name="tahun_terbit" required><br><br>
+        <button type="submit" name="submit">Tambah</button>
     </form>
 
     <hr>
 
-    <h2>🔍 Cari Buku</h2>
+    <h2>Cari Buku</h2>
     <form method="GET">
         <input type="text" name="search" placeholder="Cari judul/penulis..." value="<?= htmlspecialchars($keyword) ?>">
         <button type="submit">Cari</button>
@@ -55,16 +63,16 @@ $result = $koneksi->query($sql);
 
     <hr>
 
-    <h2>📖 Daftar Buku</h2>
+    <h2>Daftar Buku</h2>
     <?php
     if ($result->num_rows > 0) {
         while ($buku = $result->fetch_assoc()) {
-            echo "<strong>Judul:</strong> {$buku['judul']}<br>";
-            echo "<strong>Penulis:</strong> {$buku['penulis']}<br>";
-            echo "<strong>Tahun:</strong> {$buku['tahun_terbit']}<br><hr>";
+            echo "Judul: " . $buku['judul'] . "<br>";
+            echo "Penulis: " . $buku['penulis'] . "<br>";
+            echo "Tahun: " . $buku['tahun_terbit'] . "<br><br>";
         }
     } else {
-        echo "Tidak ada buku ditemukan.";
+        echo "Belum ada buku.";
     }
     ?>
 </body>
